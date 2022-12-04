@@ -64,7 +64,8 @@ module.exports = (sequelize) => {
       }
     },
     img: {
-      type: DataTypes.BLOB,
+      // type: DataTypes.BLOB,
+      type: DataTypes.STRING
     }
   }, { timestamps: false });
 };
