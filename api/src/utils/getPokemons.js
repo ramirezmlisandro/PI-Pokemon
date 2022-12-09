@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const getPokemons = async (req, res) => {
+const getPokemonsUtil = async (req, res) => {
 
   const pokemons = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=40")
     .then(response => response.data.results);
@@ -8,10 +8,13 @@ const getPokemons = async (req, res) => {
   const pokeArray = await Promise.all(pokemonsUrls.map(pokeUrl => axios.get(`${pokeUrl}`)))
     .then(values => {
       return values.map(res => {
+        const types = res.data.types.map(tipo => (
+          tipo.type.name
+        ));
         const pokemon = {
           name: res.data.name,
           image: res.data.sprites.other.home.front_default,
-          types: res.data.types
+          types: types
         }
         return pokemon
       })
@@ -23,4 +26,4 @@ const getPokemons = async (req, res) => {
   // res.send(pokemonsUrls)
 };
 
-module.exports = getPokemons;
+module.exports = getPokemonsUtil;
