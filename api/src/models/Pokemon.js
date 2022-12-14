@@ -1,13 +1,9 @@
 const { DataTypes } = require("sequelize");
-// const fs = require("fs");
-
-
-// const defaultImage = fs.readFileSync(__dirname + "/Pokémon_logo.svg.png");
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define("Pokemon", {
+  sequelize.define("pokemon", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -21,12 +17,12 @@ module.exports = (sequelize) => {
         len: [0, 20]
       },
     },
-    life: {
+    hp: {
       type: DataTypes.INTEGER,
       validate: {
         min: 0,
         max: 999
-      }
+      },
     },
     attack: {
       type: DataTypes.INTEGER,

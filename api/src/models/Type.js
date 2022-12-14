@@ -1,17 +1,16 @@
 const { DataTypes } = require("sequelize");
-const pokeTypes = require("./pokeTypes.js")
+const pokeTypes = require("./Types/pokeTypes")
 
 module.exports = (sequelize) => {
-  sequelize.define("Type", {
+  sequelize.define("type", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      allowNull: false
     },
     name: {
       type: DataTypes.ENUM(pokeTypes),
-      defaultValue: "unknown"
+      defaultValue: "unknown",
     }
   }, { timestamps: false });
 };
