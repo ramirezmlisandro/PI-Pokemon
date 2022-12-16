@@ -8,6 +8,21 @@ const getDbPokemon = async (name) => {
       attributes: ["name"]
     }
   })
+
+  if (pokemon) {
+    const tipos = pokemon.types.map(tipo => (
+      tipo.name
+    ));
+
+    const pokemonClean = {
+      name: pokemon.name,
+      image: pokemon.img,
+      types: tipos,
+      origin: 'db',
+    }
+
+    return pokemonClean
+  }
   return pokemon
 };
 

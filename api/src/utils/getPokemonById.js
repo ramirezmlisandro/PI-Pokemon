@@ -10,6 +10,27 @@ const getDbPokemonByid = async (id) => {
       attributes: ["name"]
     }
   });
+  if (pokemon) {
+    const tipos = pokemon.types.map(tipo => (
+      tipo.name
+    ));
+    
+    const pokemonClean = {
+      id: pokemon.id,
+        name: pokemon.name,
+        life: pokemon.hp,
+        attack: pokemon.attack,
+        defense: pokemon.defense,
+        speed: pokemon.speed,
+        height: pokemon.height,
+        weight: pokemon.weight,
+        image: pokemon.img,
+        types: tipos,
+        origin: 'db'
+    }
+
+    return pokemonClean
+  }
   return pokemon
 };
 
@@ -28,8 +49,9 @@ const getApiPokemonById = async (id) => {
         speed: response.data.stats[5].base_stat,
         height: response.data.height,
         weight: response.data.weight,
-        img: response.data.sprites.other.home.front_default,
-        types: types
+        image: response.data.sprites.other.home.front_default,
+        types: types,
+        origin: 'api'
       }
       return pokemon
     })

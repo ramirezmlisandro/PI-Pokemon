@@ -7,14 +7,17 @@ const getDbPokemons = async () => {
       attributes: ["name"]
     }
   });
-  const dbPokemonsClean = dbPokemons.map(pokemon => (
-    {
+  const dbPokemonsClean = dbPokemons.map(pokemon => {
+    const tipos = pokemon.types.map(tipo => (
+      tipo.name
+    ));
+    return {
       name: pokemon.name,
-      img: pokemon.img,
-      types: pokemon.types,
+      image: pokemon.img,
+      types: tipos,
       origin: 'db',
     }
-  ));
+  });
   return dbPokemonsClean;
 };
 

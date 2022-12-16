@@ -1,5 +1,6 @@
 const { getAllPokemons, findPokemon, findPokemonById } = require("../utils/utils")
-const { Pokemon } = require("../db");
+const { Pokemon, Type } = require("../db");
+const { Op } = require("sequelize");
 
 
 const getPokemons = async (req, res) => {
@@ -23,8 +24,37 @@ const getPokemonById = async (req, res) => {
 
 const postPokemon = async (req, res) => {
   try {
-    const { name, hp, attack, defense, speed, height, weight } = req.body;
-    const newPokemon = await Pokemon.create({ name, hp, attack, defense, speed, height, weight });
+    const { name, hp, attack, defense, speed, height, weight, types } = req.body;
+    const newPokemon = await Pokemon.create({
+      name,
+      hp,
+      attack,
+      defense,
+      speed,
+      height,
+      weight,
+    });
+    // const tipos = await Type.findAll({
+    //   where: {
+    //     name: "electric"
+    //   }
+    // })
+    // const tipos = await types.map(async (tipo) => {
+    //   await Type.findOne({
+    //     where: {
+    //       name: tipo.name
+    //     }
+    //   })
+    // })
+    // await newPokemon.setTypes(tipos)
+    await types.forEach(async (tipo) => {
+      const type = await Type.findOne({
+        where: {
+          name: tipo.name
+        }
+      })
+      await newPokemon.setTypes(type)
+    })
     res.status(200).json(newPokemon);
   } catch (error) {
     res.status(400).json({ error: error.message });

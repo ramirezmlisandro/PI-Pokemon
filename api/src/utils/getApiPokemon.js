@@ -10,7 +10,8 @@ const getApiPokemon = async (name) => {
       return {
         name: response.data.name,
         image: response.data.sprites.other.home.front_default,
-        types: types
+        types: types,
+        origin: 'api'
       }
     })
     .catch(err => (
